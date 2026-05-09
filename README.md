@@ -1,73 +1,67 @@
-# React + TypeScript + Vite
+# E-Commerce App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple e-commerce product listing app built with React and TypeScript.
 
-Currently, two official plugins are available:
+## What it does
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Shows all products on the home page
+- Filter products by category
+- Search products in real time
+- Click on a product to see its details
 
-## React Compiler
+## Tech Stack
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- React 19
+- TypeScript
+- Tailwind CSS
+- Axios
+- React Router
+- Vite
 
-## Expanding the ESLint configuration
+## API
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+All data comes from [DummyJSON](https://dummyjson.com/products).
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+| What | Endpoint |
+|---|---|
+| All products | `GET /products` |
+| Categories | `GET /products/categories` |
+| By category | `GET /products/category/{slug}` |
+| Single product | `GET /products/{id}` |
+| Search | `GET /products/search?q={query}` |
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## Project Structure
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+src/
+├── api/
+│   └── axios.ts        # axios setup with base URL
+├── components/
+│   ├── Products.tsx    # product grid + search + category filter
+│   └── ProductCard.tsx # single product card
+├── pages/
+│   ├── Home.tsx        # home page
+│   └── ProductDetail.tsx # product detail page
+└── types/
+    └── product.ts      # TypeScript types
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Getting Started
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+# Install dependencies
+npm install
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+# Start the dev server
+npm run dev
 ```
+
+Then open `http://localhost:5173` in your browser.
+
+## Features
+
+- Category filter updates the URL (e.g. `?category=beauty`)
+- Search also updates the URL (e.g. `?q=phone`)
+- So you can share links and the browser back button works
+- Skeleton loading while data is fetching
+- Responsive grid (1 → 2 → 3 → 4 columns)
